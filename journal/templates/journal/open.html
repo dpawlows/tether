@@ -1,0 +1,21 @@
+{% extends "journal/base.html" %}
+
+{% block title %}Open — Tether{% endblock %}
+
+{% block content %}
+<div class="form-page">
+    <div class="form-container">
+        {% if error %}
+            <p class="form-error-msg">{{ error }}</p>
+        {% endif %}
+        <form method="post" class="journal-form">
+            {% csrf_token %}
+            <div class="field-wrap">
+                {{ form.codeword }}
+            </div>
+            <button type="submit" class="btn-submit">Open</button>
+        </form>
+        <p class="form-back"><a href="{% url 'landing' %}">&larr; Return</a></p>
+    </div>
+</div>
+{% endblock %}

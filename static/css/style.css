@@ -1,0 +1,1091 @@
+/* ============================================================
+   Tether Journal — Stylesheet
+   Cover palette: Sinister (dark teal-black / muted sage)
+   Interior palette: warm parchment / sepia / ink
+   ============================================================ */
+
+:root {
+  /* Sinister cover palette */
+  --sin-void:     #080C0F;
+  --sin-deep:     #102929;
+  --sin-shadow:   #3D4D3F;
+  --sin-muted:    #71725F;
+  --sin-pale:     #98A385;
+
+  /* Interior parchment palette — darkened, desaturated, cold-shifted */
+  --parchment:    #d8d0bc;
+  --parchment-dk: #c8bfa8;
+  --ink:          #1a110a;
+  --ink-faded:    #453525;
+  --sepia:        #6b4a2e;
+  --sepia-lt:     #8f6a40;
+  --rule-color:   #a08860;
+  --shadow:       rgba(20, 14, 8, 0.28);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background-color: var(--sin-void);
+  font-family: 'IM Fell English', Georgia, 'Times New Roman', serif;
+  color: var(--ink);
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.page-wrap {
+  width: 100%;
+  max-width: 1300px;
+  min-height: 100vh;
+}
+
+/* ============================================================
+   Landing Page
+   ============================================================ */
+
+.landing {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.cover-wrap {
+  perspective: 1200px;
+}
+
+.cover-image {
+  width: 400px;
+  height: 580px;
+  background: linear-gradient(160deg, var(--sin-deep) 0%, var(--sin-void) 60%, #050808 100%);
+  border-radius: 3px 8px 8px 3px;
+  box-shadow:
+    -10px 0 20px rgba(0,0,0,0.8),
+    8px 8px 60px rgba(0,0,0,0.9),
+    0 0 120px rgba(16, 40, 40, 0.4),
+    inset -3px 0 8px rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3rem 2rem 2.5rem;
+  position: relative;
+  transform: rotateY(-10deg);
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+.cover-image:hover {
+  transform: rotateY(-5deg);
+  box-shadow:
+    -6px 0 14px rgba(0,0,0,0.7),
+    12px 12px 80px rgba(0,0,0,0.85),
+    0 0 160px rgba(16, 40, 40, 0.5),
+    inset -3px 0 8px rgba(0,0,0,0.5);
+}
+
+.cover-texture {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image:
+    /* faint grain */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"),
+    /* subtle vignette */
+    radial-gradient(ellipse at 50% 50%, transparent 40%, rgba(0,0,0,0.55) 100%),
+    /* cold top highlight */
+    radial-gradient(ellipse at 35% 15%, rgba(152,163,133,0.06) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+/* Spine */
+.cover-image::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 22px;
+  background: linear-gradient(to right, #020404, var(--sin-deep) 50%, #0d2020);
+  border-radius: 3px 0 0 3px;
+  box-shadow: inset -3px 0 6px rgba(0,0,0,0.6);
+}
+
+/* Decorative border etched into cover */
+.cover-image::after {
+  content: '';
+  position: absolute;
+  inset: 18px 14px 18px 30px;
+  border: 1px solid rgba(152, 163, 133, 0.12);
+  border-radius: 1px;
+  pointer-events: none;
+}
+
+.cover-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  z-index: 1;
+  padding-left: 22px;
+  flex: 1;
+  justify-content: center;
+}
+
+.cover-title {
+  font-family: 'IM Fell English SC', serif;
+  font-size: 3.4rem;
+  color: var(--sin-pale);
+  letter-spacing: 0.18em;
+  text-shadow:
+    0 0 30px rgba(152, 163, 133, 0.25),
+    0 2px 6px rgba(0,0,0,0.8);
+}
+
+.cover-subtitle {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--sin-muted);
+  letter-spacing: 0.1em;
+}
+
+/* Links on the cover */
+.cover-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 1;
+  padding-left: 22px;
+  width: 100%;
+}
+
+.cover-nav-link {
+  color: var(--sin-muted);
+  text-decoration: none;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.35rem 1rem;
+  border: 1px solid rgba(112, 114, 94, 0.3);
+  width: 100%;
+  text-align: center;
+  transition: color 0.3s, border-color 0.3s, background 0.3s, text-shadow 0.3s;
+  border-radius: 1px;
+}
+
+.cover-nav-link:hover {
+  color: var(--sin-pale);
+  border-color: rgba(152, 163, 133, 0.5);
+  background: rgba(16, 40, 40, 0.6);
+  text-shadow: 0 0 12px rgba(152, 163, 133, 0.4);
+}
+
+.cover-nav-divider {
+  color: rgba(112, 114, 94, 0.4);
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+/* ============================================================
+   Form Pages (New & Open)
+   ============================================================ */
+
+.form-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 3rem 0;
+}
+
+.form-container {
+  background: var(--parchment);
+  border-radius: 2px;
+  padding: 2.5rem 3rem;
+  width: 100%;
+  max-width: 360px;
+  box-shadow:
+    0 4px 32px var(--shadow),
+    0 1px 4px rgba(0,0,0,0.15);
+  position: relative;
+}
+
+/* Top binding stripe */
+.form-container::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 6px;
+  background: linear-gradient(to right, var(--sepia), var(--sepia-lt), var(--sepia));
+  border-radius: 2px 2px 0 0;
+}
+
+.form-heading {
+  font-family: 'IM Fell English SC', serif;
+  font-size: 1.7rem;
+  color: var(--ink);
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.04em;
+}
+
+.form-intro {
+  font-style: italic;
+  color: var(--ink-faded);
+  font-size: 0.93rem;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.journal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.field-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.field-wrap label {
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-faded);
+  text-transform: uppercase;
+}
+
+.field-wrap input,
+.field-wrap textarea {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--rule-color);
+  padding: 0.5rem 0.2rem;
+  font-family: 'IM Fell English', Georgia, serif;
+  font-size: 1rem;
+  color: var(--ink);
+  outline: none;
+  width: 100%;
+  transition: border-color 0.2s;
+}
+
+.field-wrap input:focus,
+.field-wrap textarea:focus {
+  border-bottom-color: var(--sepia);
+}
+
+.field-wrap textarea {
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.6;
+  border: 1px solid var(--rule-color);
+  padding: 0.6rem 0.5rem;
+  border-radius: 1px;
+}
+
+.field-errors {
+  list-style: none;
+  color: #8b1a1a;
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+.form-errors {
+  list-style: none;
+  color: #8b1a1a;
+  font-size: 0.9rem;
+  font-style: italic;
+  padding: 0.5rem 0;
+}
+
+.form-error-msg {
+  color: #8b1a1a;
+  font-style: italic;
+  font-size: 0.95rem;
+  margin-bottom: 1.2rem;
+  padding: 0.5rem 0.8rem;
+  border-left: 3px solid #8b1a1a;
+  background: rgba(139, 26, 26, 0.06);
+}
+
+.btn-submit {
+  align-self: flex-start;
+  background: var(--sepia);
+  color: var(--parchment);
+  border: none;
+  padding: 0.6rem 1.8rem;
+  font-family: 'IM Fell English SC', serif;
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  border-radius: 2px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: background 0.2s, box-shadow 0.2s;
+  margin-top: 0.4rem;
+}
+
+.btn-submit:hover {
+  background: var(--ink-faded);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+}
+
+.form-back {
+  margin-top: 1.8rem;
+  font-size: 0.9rem;
+}
+
+.form-back a {
+  color: var(--ink-faded);
+  text-decoration: none;
+  font-style: italic;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.form-back a:hover {
+  color: var(--sepia);
+  border-bottom-color: var(--sepia);
+}
+
+/* ============================================================
+   Journal — Two-Page Spread
+   ============================================================ */
+
+:root {
+  --lh:      2rem;
+  --text-lh: 1.65rem;  /* line height for entry / compose text */
+  --pp-v:    2.8rem;   /* page padding vertical   */
+  --pp-h:    2.8rem;   /* page padding horizontal  */
+  --ph:      72vh;     /* page height              */
+}
+
+/* ---- Book wrap ---- */
+.book-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  padding: 3vh 0 0;
+}
+
+/* ---- Spread: two pages + a thin gutter line ---- */
+.book-spread {
+  display: flex;
+  width: 100%;
+  max-width: 1260px;
+  align-items: stretch;
+}
+
+/* ---- Centre gutter / "binding" line ---- */
+.book-spine {
+  width: 2px;
+  flex-shrink: 0;
+  background: rgba(90, 66, 40, 0.35);
+  box-shadow: 0 0 6px rgba(0,0,0,0.4);
+}
+
+/* ---- Pages ---- */
+.book-page {
+  flex: 1;
+  height: var(--ph);
+  min-height: 480px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: var(--pp-v) var(--pp-h);
+  position: relative; /* anchors page-num and ::after pseudo-elements */
+
+  /* Ruled lines */
+  background-color: var(--parchment);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent calc(var(--lh) - 1px),
+    rgba(180, 140, 80, 0.22) calc(var(--lh) - 1px),
+    rgba(180, 140, 80, 0.22) var(--lh)
+  );
+  background-size: 100% var(--lh);
+}
+
+/* Entry and compose pages use tighter ruling to match text line-height */
+.book-page--text {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent calc(var(--text-lh) - 1px),
+    rgba(180, 140, 80, 0.22) calc(var(--text-lh) - 1px),
+    rgba(180, 140, 80, 0.22) var(--text-lh)
+  );
+  background-size: 100% var(--text-lh);
+}
+
+.book-page--left {
+  border-radius: 3px 0 0 3px;
+  box-shadow: -6px 0 20px rgba(0,0,0,0.5);
+}
+
+/* Red margin line, near gutter on the left page */
+.book-page--left::after {
+  content: '';
+  position: absolute;
+  right: 2.2rem;
+  top: 0; bottom: 0;
+  width: 1px;
+  background: rgba(210, 100, 80, 0.15);
+  pointer-events: none;
+}
+
+.book-page--right {
+  border-radius: 0 3px 3px 0;
+  box-shadow: 6px 0 20px rgba(0,0,0,0.5);
+}
+
+/* Red margin line, near gutter on the right page */
+.book-page--right::after {
+  content: '';
+  position: absolute;
+  left: 2.2rem;
+  top: 0; bottom: 0;
+  width: 1px;
+  background: rgba(210, 100, 80, 0.15);
+  pointer-events: none;
+}
+
+/* ---- Page inner ---- */
+.page-inner {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+/* ---- Date line ---- */
+.page-date {
+  font-style: italic;
+  color: var(--ink-faded);
+  font-size: 0.85rem;
+  line-height: var(--lh);
+  flex-shrink: 0;
+}
+
+/* ---- Entry (read-only) ---- */
+.entry-content {
+  font-size: 0.92rem;
+  line-height: var(--text-lh);
+  color: var(--ink);
+}
+
+/* ---- Compose page ---- */
+.page-compose {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.compose-form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  min-height: 0;
+}
+
+.compose-form .field-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.compose-form textarea {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  width: 100%;
+  resize: none;
+  font-family: 'IM Fell English', Georgia, serif;
+  font-size: 0.92rem;
+  line-height: var(--text-lh);
+  color: var(--ink);
+  padding: 0;
+  min-height: 8rem;
+}
+
+.compose-form textarea::placeholder {
+  color: rgba(90, 66, 40, 0.28);
+  font-style: italic;
+}
+
+/* ---- Record button ---- */
+.btn-submit {
+  align-self: flex-start;
+  flex-shrink: 0;
+  background: transparent;
+  color: var(--ink-faded);
+  border: 1px solid var(--rule-color);
+  padding: 0.25rem 1.2rem;
+  font-family: 'IM Fell English SC', serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  border-radius: 1px;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.btn-submit:hover {
+  color: var(--ink);
+  border-color: var(--sepia);
+  background: rgba(139, 94, 60, 0.06);
+}
+
+/* ---- Decorative page (page 1 placeholder) ---- */
+.page-decorative {
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+.deco-frame {
+  width: 100%;
+  flex: 1;
+  border: 1px solid rgba(139, 94, 60, 0.4);
+  box-shadow: inset 0 0 0 5px var(--parchment), inset 0 0 0 6px rgba(139, 94, 60, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.deco-corner {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: rgba(139, 94, 60, 0.55);
+  border-style: solid;
+}
+
+.deco-corner--tl { top: -1px;    left: -1px;   border-width: 2px 0 0 2px; }
+.deco-corner--tr { top: -1px;    right: -1px;  border-width: 2px 2px 0 0; }
+.deco-corner--bl { bottom: -1px; left: -1px;   border-width: 0 0 2px 2px; }
+.deco-corner--br { bottom: -1px; right: -1px;  border-width: 0 2px 2px 0; }
+
+.deco-center {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Horizontal rule through centre */
+.deco-rule-h {
+  position: absolute;
+  left: -3.5rem; right: -3.5rem;
+  height: 1px;
+  background: rgba(139, 94, 60, 0.25);
+}
+
+/* Vertical rule through centre */
+.deco-rule-v {
+  position: absolute;
+  top: -3.5rem; bottom: -3.5rem;
+  width: 1px;
+  background: rgba(139, 94, 60, 0.25);
+  left: 50%;
+}
+
+/* Nested diamond rings */
+.deco-ring {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(139, 94, 60, 0.45);
+  transform: rotate(45deg);
+}
+
+.deco-ring--outer { width: 90px;  height: 90px; }
+.deco-ring--inner { width: 58px;  height: 58px; }
+
+.deco-glyph {
+  display: block;
+  transform: rotate(-45deg);
+  font-size: 1.4rem;
+  color: var(--sepia);
+  line-height: 1;
+}
+
+/* ---- Front matter page ---- */
+.page-front-matter {
+  justify-content: space-between;
+}
+
+.fm-heading {
+  font-family: 'IM Fell English SC', serif;
+  font-size: 1.25rem;
+  font-weight: normal;
+  color: var(--ink);
+  letter-spacing: 0.05em;
+  line-height: var(--lh);
+  text-align: center;
+  margin-bottom: calc(var(--lh) * 1.5);
+}
+
+.fm-form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.fm-line {
+  border-bottom: 1px solid var(--ink);
+  margin-bottom: calc(var(--lh) * 1.5);
+}
+
+.fm-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: 'IM Fell English', Georgia, serif;
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: var(--lh);
+  color: var(--ink);
+  padding: 0 0.2rem calc(var(--lh) - 1px);
+}
+
+.fm-dates {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-top: var(--lh);
+}
+
+.fm-date-line {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  line-height: var(--lh);
+  border-bottom: 1px solid var(--ink);
+}
+
+.fm-label {
+  font-family: 'IM Fell English SC', serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  color: var(--ink-faded);
+  white-space: nowrap;
+}
+
+.fm-date-value {
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+
+.fm-input[name="date_ended"] {
+  flex: 1;
+  padding-bottom: calc(var(--lh) - 1px);
+}
+
+.fm-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: var(--lh);
+}
+
+.fm-save {
+  background: transparent;
+  border: none;
+  font-family: 'IM Fell English', Georgia, serif;
+  font-style: italic;
+  font-size: 0.78rem;
+  color: var(--ink-faded);
+  opacity: 0.45;
+  cursor: pointer;
+  padding: 0.2rem 0;
+  letter-spacing: 0.05em;
+  transition: opacity 0.2s;
+}
+
+.fm-save:hover { opacity: 1; }
+
+/* ---- Map pages ---- */
+.page-map {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.page-map--left {
+  padding-right: calc(var(--pp-h) * 0.5); /* tighter on spine side */
+}
+
+.page-map--right {
+  padding-left: calc(var(--pp-h) * 0.5);
+}
+
+.map-heading {
+  position: absolute;
+  top: 0.3rem;
+  left: 0.55rem;
+  font-family: 'IM Fell English SC', serif;
+  font-size: 0.82rem;
+  font-weight: normal;
+  color: var(--ink-faded);
+  letter-spacing: 0.07em;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* The two map frames share one continuous visual border:
+   left frame has no right border; right frame has no left border.
+   The thin spine line sits between them visually. */
+.map-frame {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  position: relative;
+  border: 1px solid rgba(139, 94, 60, 0.5);
+  padding: 1rem 1rem 0.75rem;
+}
+
+.map-frame--left {
+  border-right: none;
+  background-image: radial-gradient(circle, rgba(139,94,60,0.18) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+.map-frame--right {
+  border-left: none;
+  background-image: radial-gradient(circle, rgba(139,94,60,0.18) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* Corner ornaments — only on outer corners */
+.map-corner {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: rgba(139, 94, 60, 0.65);
+  border-style: solid;
+}
+
+.map-corner--tl { top: -1px;    left: -1px;   border-width: 2px 0 0 2px; }
+.map-corner--tr { top: -1px;    right: -1px;  border-width: 2px 2px 0 0; }
+.map-corner--bl { bottom: -1px; left: -1px;   border-width: 0 0 2px 2px; }
+.map-corner--br { bottom: -1px; right: -1px;  border-width: 0 2px 2px 0; }
+
+.map-form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.map-textarea {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  width: 100%;
+  resize: none;
+  font-family: 'IM Fell English', Georgia, serif;
+  font-size: 1rem;
+  line-height: var(--lh);
+  color: var(--ink);
+  padding: 0;
+  min-height: 6rem;
+}
+
+/* Save form: absolute overlay at bottom-left of the map frame */
+.map-save-form {
+  position: absolute;
+  bottom: 0.3rem;
+  left: 0.55rem;
+  z-index: 2;
+}
+
+.map-save-btn {
+  margin-top: 0;
+}
+
+/* ---- Map canvas ---- */
+.map-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  touch-action: none;   /* prevent scroll/pan while drawing */
+  flex: 1;
+}
+
+/* ---- Entry: edited badge ---- */
+.entry-edited {
+  font-size: 0.75rem;
+  color: var(--sepia-lt);
+  font-style: italic;
+  letter-spacing: 0.02em;
+}
+
+/* ---- Entry: inline edit ---- */
+.entry-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  position: relative;
+}
+
+.entry-view {
+  flex: 1;
+}
+
+.entry-edit-form {
+  display: none;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.5rem;
+  min-height: 0;
+}
+
+.entry-edit-textarea {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: none;
+  width: 100%;
+  font-family: 'IM Fell English', Georgia, serif;
+  font-size: 0.92rem;
+  line-height: var(--text-lh);
+  color: var(--ink);
+  padding: 0;
+  min-height: 6rem;
+}
+
+.entry-edit-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.btn-cancel {
+  background: transparent;
+  border: none;
+  font-family: 'IM Fell English', Georgia, serif;
+  font-style: italic;
+  font-size: 0.78rem;
+  color: var(--ink-faded);
+  opacity: 0.5;
+  cursor: pointer;
+  padding: 0;
+  letter-spacing: 0.05em;
+  transition: opacity 0.2s;
+}
+
+.btn-cancel:hover { opacity: 1; }
+
+.entry-edit-trigger {
+  margin-top: auto;
+  padding-top: 0.3rem;
+}
+
+.book-page--left .entry-edit-trigger {
+  align-self: flex-start;
+}
+
+.book-page--right .entry-edit-trigger {
+  align-self: flex-end;
+}
+
+/* ---- Delete trigger button (on front matter page) ---- */
+.delete-trigger {
+  background: transparent;
+  border: none;
+  font-family: 'IM Fell English', Georgia, serif;
+  font-style: italic;
+  font-size: 0.72rem;
+  color: rgba(139, 26, 26, 0.38);
+  cursor: pointer;
+  padding: 0;
+  letter-spacing: 0.04em;
+  transition: color 0.2s;
+}
+
+.delete-trigger:hover {
+  color: rgba(139, 26, 26, 0.75);
+}
+
+/* ---- Delete confirmation modal ---- */
+.delete-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 8, 10, 0.72);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-modal--open {
+  display: flex;
+}
+
+.delete-modal-box {
+  max-width: 340px;
+}
+
+/* Crimson binding stripe instead of sepia */
+.delete-modal-box::before {
+  background: linear-gradient(to right, #6b1212, #a03030, #6b1212);
+}
+
+.delete-warning {
+  font-style: italic;
+  font-size: 0.88rem;
+  color: var(--ink-faded);
+  line-height: 1.5;
+  margin-bottom: 0.8rem;
+}
+
+.delete-confirm-btn {
+  background: #8b1a1a;
+}
+
+.delete-confirm-btn:hover {
+  background: #6b1212;
+}
+
+/* ---- Page numbers ---- */
+.page-num {
+  position: absolute;
+  bottom: 0.75rem;
+  font-family: 'IM Fell English', Georgia, serif;
+  font-size: 0.78rem;
+  color: var(--ink-faded);
+  opacity: 0.5;
+  letter-spacing: 0.04em;
+  pointer-events: none;
+}
+
+.page-num--left  { left:  var(--pp-h); }
+.page-num--right { right: var(--pp-h); }
+
+/* ---- Page navigation ---- */
+.journal-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2.5rem;
+  padding: 0.8rem 0 0.4rem;
+  width: 100%;
+  max-width: 1260px;
+}
+
+.page-btn {
+  font-size: 1.8rem;
+  line-height: 1;
+  color: var(--sin-muted);
+  text-decoration: none;
+  font-family: Georgia, serif;
+  transition: color 0.2s, transform 0.15s;
+  display: inline-block;
+}
+
+.page-btn:hover {
+  color: var(--sin-pale);
+  transform: scale(1.15);
+}
+
+.page-btn--off {
+  color: rgba(112, 114, 94, 0.2);
+  cursor: default;
+}
+
+/* ---- Footer ---- */
+.journal-footer {
+  padding: 0.3rem 0 1.5rem;
+  text-align: center;
+}
+
+.footer-link {
+  color: var(--sin-muted);
+  text-decoration: none;
+  font-style: italic;
+  font-size: 0.8rem;
+  opacity: 0.45;
+  letter-spacing: 0.05em;
+  transition: opacity 0.2s, color 0.2s;
+}
+
+.footer-link:hover {
+  color: var(--sin-pale);
+  opacity: 1;
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+
+@media (max-width: 600px) {
+  .form-container {
+    padding: 2rem 1.5rem;
+  }
+
+  .book-spread { flex-direction: column; }
+
+  .book-spine {
+    width: auto;
+    height: 2px;
+  }
+
+  .book-page {
+    height: auto;
+    min-height: 60vh;
+  }
+
+  .book-page--left,
+  .book-page--right {
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .book-page--left::after,
+  .book-page--right::after { display: none; }
+
+  .map-frame--left  { border-right: 1px solid rgba(139,94,60,0.5); }
+  .map-frame--right { border-left:  1px solid rgba(139,94,60,0.5); }
+
+  .cover-image {
+    width: 300px;
+    height: 440px;
+    padding: 2rem 1.5rem 2rem;
+  }
+
+  .cover-title {
+    font-size: 2.6rem;
+  }
+
+  .cover-nav-link {
+    font-size: 0.78rem;
+  }
+}

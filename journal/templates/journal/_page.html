@@ -1,0 +1,125 @@
+{% load static %}
+
+{% if page.type == 'decorative' %}
+
+<div class="page-inner page-decorative">
+    <div class="deco-frame">
+        <span class="deco-corner deco-corner--tl"></span>
+        <span class="deco-corner deco-corner--tr"></span>
+        <span class="deco-corner deco-corner--bl"></span>
+        <span class="deco-corner deco-corner--br"></span>
+        <div class="deco-center">
+            <div class="deco-ring deco-ring--outer">
+                <div class="deco-ring deco-ring--inner">
+                    <span class="deco-glyph">&#10022;</span>
+                </div>
+            </div>
+            <div class="deco-rule-h"></div>
+            <div class="deco-rule-v"></div>
+        </div>
+    </div>
+</div>
+
+{% elif page.type == 'front_matter' %}
+
+<div class="page-inner page-front-matter">
+    <h2 class="fm-heading">This Journal Belongs To</h2>
+    <form id="fm-meta-form" method="post" action="{% url 'save_meta' pk=journal.id %}" class="fm-form">
+        {% csrf_token %}
+        <div class="fm-line">
+            {{ page.form.player1_name }}
+        </div>
+        <div class="fm-line">
+            {{ page.form.player2_name }}
+        </div>
+        <div class="fm-dates">
+            <p class="fm-date-line">
+                <span class="fm-label">Date started</span>
+                <span class="fm-date-value">{{ journal.created_at|date:"F j, Y" }}</span>
+            </p>
+            <p class="fm-date-line">
+                <span class="fm-label">Date ended</span>
+                {{ page.form.date_ended }}
+            </p>
+        </div>
+    </form>
+    <div class="fm-actions">
+        <button type="button" class="delete-trigger">delete journal</button>
+        <button type="submit" form="fm-meta-form" class="fm-save">save</button>
+    </div>
+</div>
+
+{% elif page.type == 'map_left' %}
+
+<div class="page-inner page-map page-map--left">
+    <div class="map-frame map-frame--left">
+        <span class="map-corner map-corner--tl"></span>
+        <span class="map-corner map-corner--bl"></span>
+        <h2 class="map-heading">The Map</h2>
+        <canvas id="map-canvas-left" class="map-canvas"></canvas>
+        {# Form submits both canvases; hidden inputs populated by JS on submit #}
+        <form id="map-form" method="post" action="{% url 'save_map' pk=journal.id %}" class="map-save-form">
+            {% csrf_token %}
+            <input type="hidden" id="map-image-left-input"  name="map_image_left"  value="">
+            <input type="hidden" id="map-image-right-input" name="map_image_right" value="">
+            <button type="submit" class="fm-save map-save-btn">save</button>
+        </form>
+    </div>
+</div>
+{% if journal.map_image_left %}
+<img id="map-saved-image-left" src="{{ journal.map_image_left }}" alt="" style="display:none;">
+{% endif %}
+
+{% elif page.type == 'map_right' %}
+
+<div class="page-inner page-map page-map--right">
+    <div class="map-frame map-frame--right">
+        <span class="map-corner map-corner--tr"></span>
+        <span class="map-corner map-corner--br"></span>
+        <canvas id="map-canvas-right" class="map-canvas"></canvas>
+    </div>
+</div>
+{% if journal.map_image %}
+<img id="map-saved-image-right" src="{{ journal.map_image }}" alt="" style="display:none;">
+{% endif %}
+
+{% elif page.type == 'entry' %}
+
+<div class="page-inner page-entry">
+    <p class="page-date">
+        {{ page.entry.created_at|date:"l, F j, Y" }}{% if page.entry.edited_at and page.entry.edited_at|date:"Y-m-d" != page.entry.created_at|date:"Y-m-d" %} <span class="entry-edited">(edited {{ page.entry.edited_at|date:"n/j/Y" }})</span>{% endif %}
+    </p>
+    <div class="entry-body">
+        <div class="entry-view entry-content">{{ page.entry.content|linebreaksbr }}</div>
+        <form method="post"
+              action="{% url 'edit_entry' pk=journal.id entry_pk=page.entry.pk %}"
+              class="entry-edit-form">
+            {% csrf_token %}
+            <textarea name="content" class="entry-edit-textarea">{{ page.entry.content }}</textarea>
+            <div class="entry-edit-actions">
+                <button type="submit" class="btn-submit">Save</button>
+                <button type="button" class="btn-cancel">cancel</button>
+            </div>
+        </form>
+        <button type="button" class="fm-save entry-edit-trigger">edit</button>
+    </div>
+</div>
+
+{% elif page.type == 'compose' %}
+
+<div class="page-inner page-compose">
+    <p class="page-date">{% now "l, F j, Y" %}</p>
+    <form method="post" action="{% url 'add_entry' pk=journal.id %}" class="compose-form">
+        {% csrf_token %}
+        <div class="field-wrap">
+            {{ page.form.content }}
+        </div>
+        <button type="submit" class="btn-submit">Record</button>
+    </form>
+</div>
+
+{% else %}{# blank #}
+
+<div class="page-inner page-blank"></div>
+
+{% endif %}

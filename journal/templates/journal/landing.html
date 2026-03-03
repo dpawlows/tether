@@ -1,0 +1,23 @@
+{% extends "journal/base.html" %}
+{% load static %}
+
+{% block title %}Tether — A Shared Journal{% endblock %}
+
+{% block content %}
+<div class="landing">
+    <div class="cover-wrap">
+        <div class="cover-image">
+            <div class="cover-texture"></div>
+            <div class="cover-text">
+                <span class="cover-title">Tether</span>
+                <span class="cover-subtitle">a shared journal</span>
+            </div>
+            <nav class="cover-nav">
+                <a href="{% url 'new_journal' %}" class="cover-nav-link">Begin a New Journal</a>
+                <span class="cover-nav-divider">&mdash;</span>
+                <a href="{% url 'open_journal' %}" class="cover-nav-link">Open an Existing Journal</a>
+            </nav>
+        </div>
+    </div>
+</div>
+{% endblock %}
