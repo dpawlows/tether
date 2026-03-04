@@ -3,14 +3,28 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.environ.get(
-    'SECRET_KEY',
-    'django-insecure-tether-journal-change-this-in-production-a8f3k2j9m1'
-)
+def _load_env_file(env_path: Path) -> None:
+    if not env_path.exists():
+        return
+
+    for raw_line in env_path.read_text(encoding='utf-8').splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith('#') or '=' not in line:
+            continue
+
+        key, value = line.split('=', 1)
+        key = key.strip()
+        value = value.strip().strip('"').strip("'")
+        os.environ.setdefault(key, value)
+
+
+_load_env_file(BASE_DIR / '.env')
+
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-change-me')
 
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost 127.0.0.1').split()
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost 127.0.0.1').split(',')
 
 INSTALLED_APPS = [
     'django.contrib.contenttypes',
@@ -52,7 +66,8 @@ DATABASES = {
     }
 }
 
-STATIC_URL  = '/static/'
+FORCE_SCRIPT_NAME = '/tether'
+STATIC_URL  = '/tether/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'   # collectstatic writes here
 STATICFILES_DIRS = [BASE_DIR / 'static']
 

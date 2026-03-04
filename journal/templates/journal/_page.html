@@ -67,7 +67,7 @@
     </div>
 </div>
 {% if journal.map_image_left %}
-<img id="map-saved-image-left" src="{{ journal.map_image_left }}" alt="" style="display:none;">
+<img id="map-saved-image-left" src="{{ journal.map_image_left }}" alt="" hidden>
 {% endif %}
 
 {% elif page.type == 'map_right' %}
@@ -80,7 +80,7 @@
     </div>
 </div>
 {% if journal.map_image %}
-<img id="map-saved-image-right" src="{{ journal.map_image }}" alt="" style="display:none;">
+<img id="map-saved-image-right" src="{{ journal.map_image }}" alt="" hidden>
 {% endif %}
 
 {% elif page.type == 'entry' %}
