@@ -24,7 +24,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-change-me')
 
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost 127.0.0.1').split(',')
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
 INSTALLED_APPS = [
     'django.contrib.contenttypes',
@@ -66,8 +66,11 @@ DATABASES = {
     }
 }
 
-FORCE_SCRIPT_NAME = '/tether'
-STATIC_URL  = '/tether/static/'
+if not DEBUG:
+    FORCE_SCRIPT_NAME = '/tether'
+    STATIC_URL = '/tether/static/'
+else:
+    STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'   # collectstatic writes here
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
